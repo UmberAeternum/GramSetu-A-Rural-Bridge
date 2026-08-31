@@ -1,102 +1,90 @@
 # GramSetu
 
-### One Voice. One Photo. One Connected Village.
+> **One Voice. One Photo. One Connected Village.**
 
-GramSetu is a Smart India Hackathon prototype that helps rural citizens report local infrastructure problems and helps Panchayat authorities identify, prioritise and act on recurring issues.
+GramSetu is a Smart India Hackathon prototype that turns a rural citizen's local issue into a structured, visible case for the responsible department. It combines evidence capture, native-language voice input, GPS consent, transparent triage, cloud storage, and a geographic authority dashboard.
 
-## Problem Statement
+## What the prototype does
 
-Rural residents often face civic problems—damaged roads, water leakage, faulty streetlights, garbage dumping and non-working handpumps—but may not know the correct department or reporting process. Individual complaints are also difficult to monitor when many reports point to the same underlying issue.
+- Captures a complaint photo and stores it in **Supabase Storage**.
+- Accepts typed reports and browser voice-to-text in Telugu, Hindi, Tamil, Kannada, Malayalam, and English where the browser supports those speech-recognition languages.
+- Captures GPS only after the citizen grants permission; the report retains the coordinates in its description and appears at an approximate position on the map.
+- Suggests a category, priority, and department route from the complaint text.
+- Saves reports to the shared **Supabase** database.
+- Gives the authority side a live case queue, status actions, category distribution, and problem-map hotspot signal.
+- Provides an immersive 3D rural interface with depth, landscape layers, hover tilt, terrain contours, and view transitions—without a heavyweight 3D dependency.
 
-## Our Solution
+## Important prototype boundary
 
-GramSetu gives citizens a simple reporting experience. A user can upload a photo, describe an issue in Telugu or English, record a voice message and capture their location. The prototype classifies the complaint, estimates its priority, recommends the responsible department and displays it on an authority dashboard.
+This is a hackathon implementation database. It does **not** connect to Government of India, ministry, state, or department databases, and it must not be presented as doing so. Its routing names are recommendations for the prototype workflow. A production deployment would require formal government agreements, authenticated officer roles, security review, audit trails, integrations, and accessibility/localisation validation.
 
-The core innovation is the **Problem Map**, which visualises related reports in the same locality as a potential infrastructure hotspot. It gives officials actionable insight instead of a disconnected list of complaints.
+The browser speech feature is a voice-input convenience, not a claim that the current prototype fully understands every Indian language or dialect. A production AI layer should use professionally evaluated multilingual speech-to-text, translation, and human-review workflows.
 
-## Key Features
+## Technology
 
-- Photo capture and upload for evidence-based reporting
-- Telugu/English text input and Telugu voice-to-text in supported Chrome browsers
-- GPS location capture with user permission
-- Persistent photo-evidence upload using Supabase Storage
-- Automatic problem category and priority inference
-- Department-routing recommendation
-- Authority dashboard with complaint status and category overview
-- Interactive problem map with hotspot visualisation
-- Browser-based data persistence for a dependable demo experience
+- Static HTML/CSS/JavaScript delivered by Vite
+- Supabase Postgres REST API and Supabase Storage
+- Browser Geolocation API
+- Browser Web Speech API
+- Vercel static deployment
 
-## Supported Categories
+## Database setup
 
-| Category | Suggested authority |
+1. Open your Supabase project.
+2. Go to **SQL Editor** → **New query**.
+3. Copy the entire contents of [supabase/schema.sql](supabase/schema.sql) into the editor and select **Run**.
+
+This creates the `complaints` table, enables the demo policies, and creates the `complaint-images` bucket. The supplied policies are deliberately low-friction for the SIH demo; do not use them unchanged for a public launch.
+
+## Deploy on Vercel
+
+1. Upload the contents of this project to the **root** of your GitHub repository. Keep `index.html`, `package.json`, `public/`, and `supabase/` at the root.
+2. Import the repository in Vercel.
+3. Under **Settings → Environment Variables**, create these values for Production, Preview, and Development:
+
+   ```text
+   VITE_SUPABASE_URL=https://your-project.supabase.co
+   VITE_SUPABASE_ANON_KEY=your-supabase-publishable-key
+   ```
+
+4. Use these project settings:
+
+   - Framework Preset: `Vite`
+   - Install Command: `npm install`
+   - Build Command: `npm run build`
+   - Output Directory: `dist`
+
+5. Deploy. Vercel uses HTTPS, which is required by most browsers before they allow microphone and GPS permissions.
+
+The app entry is the root `index.html`; it intentionally has **no** `/src/main.tsx` import. This avoids the build error caused by repositories where the `src` folder was not uploaded.
+
+## SIH demo flow
+
+1. Open **Citizen portal** and add a photo.
+2. Select Telugu (or another listed language), use **Speak**, or type a complaint.
+3. Tap **Capture exact GPS location** and allow location permission.
+4. Submit the case; the prototype previews its category, urgency, and suggested department route.
+5. Switch to **Authority command** and show the report, photo evidence, map marker, issue distribution, and status change.
+
+## Suggested routing in the prototype
+
+| Issue category | Prototype queue |
 | --- | --- |
 | Water | Rural Water Supply |
 | Roads | Public Works Department |
 | Electricity | Electricity Board |
-| Sanitation | Panchayat Sanitation Team |
+| Sanitation | Panchayat Sanitation |
 | Other | Village Panchayat |
 
-## Technology Stack
-
-- React + TypeScript
-- Vite
-- Responsive CSS interface
-- Web Speech API for browser speech recognition
-- Geolocation API for location capture
-- Local Storage for prototype data
-- Vercel for static deployment
-
-## Local Setup
-
-### Prerequisites
-
-- Node.js 18 or newer
-- Google Chrome is recommended for the Telugu voice demo
-
-### Run the project
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open the local URL printed by Vite. Allow microphone and location access when prompted.
+For the best voice-demo support, use Chrome on Android or desktop Chrome. Grant microphone and location permissions only during the demonstration.
 
-## Deploy on Vercel
-
-1. Create a GitHub repository and upload this project to the repository root.
-2. Visit [Vercel](https://vercel.com/new) and import the repository.
-3. In Supabase, open **SQL Editor** → **New query**, paste the complete contents of `supabase/schema.sql`, then click **Run**. This creates the shared complaints table, the `complaint-images` Storage bucket and its demo policies. It is safe to run even if you applied an earlier schema version.
-4. In Vercel → **Project Settings** → **Environment Variables**, add:
-
-   - `VITE_SUPABASE_URL` = your Supabase Project URL
-   - `VITE_SUPABASE_ANON_KEY` = your Supabase publishable/anon key
-
-5. Use these build settings:
-
-   - **Framework Preset:** Vite
-   - **Install Command:** `npm install`
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
-
-6. Click **Deploy**.
-
-Vercel serves the application over HTTPS, which is necessary for microphone and location access on most devices.
-
-## SIH Demonstration Flow
-
-1. A villager uploads a photo and records or enters a complaint.
-2. GramSetu captures the approximate location.
-3. The system identifies the category, priority and suggested department.
-4. The report appears on the authority dashboard.
-5. Nearby reports are visible through the Problem Map hotspot view.
-
-## Prototype Scope and Roadmap
-
-This version uses Supabase as a shared cloud database. It intentionally uses public report submission and dashboard policies for a low-friction SIH demonstration. Before a public launch, replace the public update policy with authenticated officer roles and add moderation, rate limiting and audit logs.
-
-## Team
+---
 
 Built for Smart India Hackathon 2026.
-
-> GramSetu turns local voices into visible, actionable village development data.
