@@ -13,6 +13,7 @@ GramSetu is a Smart India Hackathon prototype that turns a rural citizen's local
 - Saves reports to the shared **Supabase** database.
 - Gives the authority side a live case queue, status actions, category distribution, and problem-map hotspot signal.
 - Provides an immersive 3D rural interface with depth, landscape layers, hover tilt, terrain contours, and view transitions—without a heavyweight 3D dependency.
+- Adds a lightweight **4D-style village scene**: camera-parallax movement, firefly/harvest particles, monsoon rainfall, a moving light sweep, and a cinematic portal transition into the command centre. The atmosphere controls work locally in the browser and add no external API cost.
 
 ## Important prototype boundary
 
