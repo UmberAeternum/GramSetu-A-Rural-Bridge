@@ -7,7 +7,7 @@ GramSetu is a Smart India Hackathon prototype that turns a rural citizen's local
 ## What the prototype does
 
 - Captures a complaint photo and stores it in **Supabase Storage**.
-- Accepts typed reports and browser voice-to-text in Telugu, Hindi, Tamil, Kannada, Malayalam, and English where the browser supports those speech-recognition languages.
+- Accepts typed reports and browser voice-to-text for all 22 constitutionally scheduled Indian languages (with native-script labels) plus English (India). Actual recognition availability depends on the browser's installed speech service.
 - Captures GPS only after the citizen grants permission; the report retains the coordinates in its description and appears at an approximate position on the map.
 - Suggests a category, priority, and department route from the complaint text.
 - Saves reports to the shared **Supabase** database.
@@ -62,7 +62,7 @@ The app entry is the root `index.html`; it intentionally has **no** `/src/main.t
 ## SIH demo flow
 
 1. Open **Citizen portal** and add a photo.
-2. Select Telugu (or another listed language), use **Speak**, or type a complaint.
+2. Select any Indian language from the language selector, use **Speak**, or type a complaint.
 3. Tap **Capture exact GPS location** and allow location permission.
 4. Submit the case; the prototype previews its category, urgency, and suggested department route.
 5. Switch to **Authority command** and show the report, photo evidence, map marker, issue distribution, and status change.
