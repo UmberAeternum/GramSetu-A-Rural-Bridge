@@ -29,6 +29,10 @@ The browser speech feature is a voice-input convenience, not a claim that the cu
 - Browser Web Speech API
 - Vercel static deployment
 
+## Mobile app mode
+
+GramSetu is also an installable Progressive Web App (PWA): the citizen portal can be added to an Android or desktop home screen and opened in its own app window. On Android Chrome, tap **Install app** (or the browser menu → **Install app**). On iPhone, use **Share** → **Add to Home Screen**. The same photo, voice, GPS, and routing workflow is available in mobile app mode; the authority command centre remains web-first for larger screens.
+
 ## Database setup
 
 1. Open your Supabase project.
