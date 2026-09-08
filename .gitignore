@@ -1,9 +1,14 @@
-node_modules/
-dist/
-.vercel/
+# Byte/Artifact ignores
+__pycache__/
+*.py[cod]
+*.pyo
 .env
-.env.local
-*.log
-*.tsbuildinfo
-vite.config.js
-vite.config.d.ts
+venv/
+node_modules/
+.DS_Store
+.coverage
+.pytest_cache/
+
+# Editor directories
+.vscode/
+.idea/
